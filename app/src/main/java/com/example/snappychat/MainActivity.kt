@@ -61,6 +61,18 @@ class MainActivity : ComponentActivity() {
                             controller = controller,
                             modifier = Modifier.fillMaxSize()
                         )
+                        IconButton(
+                            onClick = {
+                                controller.cameraSelector = toggleCamera(controller)
+                            },
+                            modifier = Modifier.offset(0.dp)
+
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Cameraswitch,
+                                contentDescription = "Switch Camera"
+                            )
+                        }
                     }
                 }
             }
