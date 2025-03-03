@@ -32,6 +32,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.rememberBottomSheetScaffoldState
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -47,7 +48,6 @@ import com.example.snappychat.ui.theme.SnappyChatTheme
 
 class MainActivity : ComponentActivity() {
 
-    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if(!hasRequiredPermissions()) {
@@ -61,7 +61,6 @@ class MainActivity : ComponentActivity() {
         setContent {
             SnappyChatTheme {
                 var currentPhoto by remember { mutableStateOf<Bitmap?>(null) }
-                val scaffoldState = rememberBottomSheetScaffoldState()
                 val controller = remember {
                     LifecycleCameraController(applicationContext).apply {
                         setEnabledUseCases(
@@ -71,60 +70,10 @@ class MainActivity : ComponentActivity() {
                     }
                 }
                 if(currentPhoto == null) {
-                    BottomSheetScaffold(
-                        scaffoldState = scaffoldState,
-                        sheetPeekHeight = 0.dp,
-
-                        sheetContent = {
-
-                        }
-                    ) { padding ->
-                        Box(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(padding)
-                        ) {
-                            CameraPreview(
-                                controller = controller,
-                                modifier = Modifier.fillMaxSize()
-                            )
-                            IconButton(
-                                onClick = {
-                                    controller.cameraSelector = toggleCamera(controller)
-                                },
-                                modifier = Modifier.offset(0.dp)
-
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Default.Cameraswitch,
-                                    contentDescription = "Switch Camera"
-                                )
-                            }
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .align(Alignment.BottomCenter)
-                                    .padding(16.dp),
-                                horizontalArrangement = Arrangement.SpaceAround
-                            ) {
-                                IconButton(
-                                    onClick = {
-                                        takePhoto(
-                                            controller = controller,
-                                            onPhotoTaken = {
-                                                photo -> currentPhoto = photo
-                                            }
-                                        )
-                                    }
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Default.PhotoCamera,
-                                        contentDescription = "Take Photo"
-                                    )
-                                }
-                            }
-                        }
-                    }
+                   CameraScreen(
+                       controller = controller,
+                       onPhotoTaken = {photo -> currentPhoto = photo}
+                   )
                 }else{
                     Box(
                         modifier = Modifier
@@ -153,6 +102,47 @@ class MainActivity : ComponentActivity() {
                                     .align(Alignment.TopStart)
                             )
                         }
+                    }
+                }
+            }
+        }
+    }
+
+    @OptIn(ExperimentalMaterial3Api::class)
+    @Composable
+    fun CameraScreen(controller: LifecycleCameraController, onPhotoTaken: (Bitmap) -> Unit) {
+        val scaffoldState = rememberBottomSheetScaffoldState()
+
+        BottomSheetScaffold(
+            scaffoldState = scaffoldState,
+            sheetPeekHeight = 0.dp,
+            sheetContent = {  }
+        ) { padding ->
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(padding)
+            ) {
+                CameraPreview(controller = controller, modifier = Modifier.fillMaxSize())
+
+                IconButton(
+                    onClick = { controller.cameraSelector = toggleCamera(controller) },
+                    modifier = Modifier.align(Alignment.TopStart)
+                ) {
+                    Icon(imageVector = Icons.Default.Cameraswitch, contentDescription = "Switch Camera")
+                }
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(Alignment.BottomCenter)
+                        .padding(16.dp),
+                    horizontalArrangement = Arrangement.SpaceAround
+                ) {
+                    IconButton(
+                        onClick = { takePhoto(controller, onPhotoTaken) }
+                    ) {
+                        Icon(imageVector = Icons.Default.PhotoCamera, contentDescription = "Take Photo")
                     }
                 }
             }
