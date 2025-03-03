@@ -86,6 +86,27 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    private fun takePhoto(
+        controller: LifecycleCameraController,
+        onPhotoTaken: (Bitmap) -> Unit
+    ){
+        controller.takePicture(
+            ContextCompat.getMainExecutor(applicationContext),
+            object : ImageCapture.OnImageCapturedCallback(){
+                override fun onCaptureSuccess(image: ImageProxy) {
+                    super.onCaptureSuccess(image)
+
+                    onPhotoTaken(image.toBitmap())
+                }
+
+                override fun onError(exception: ImageCaptureException) {
+                    super.onError(exception)
+                    Log.e("Camera", "Error taking a picture", exception)
+                }
+            }
+        )
+    }
+
     private fun hasRequiredPermissions(): Boolean {
         return CAMERAX_PERMISSIONS.all {
             ContextCompat.checkSelfPermission(
