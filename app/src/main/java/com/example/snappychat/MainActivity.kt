@@ -20,7 +20,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
@@ -126,7 +125,7 @@ class MainActivity : ComponentActivity() {
                 CameraPreview(controller = controller, modifier = Modifier.fillMaxSize())
 
                 IconButton(
-                    onClick = { controller.cameraSelector = toggleCamera(controller) },
+                    onClick = { toggleCamera(controller) },
                     modifier = Modifier.align(Alignment.TopStart)
                 ) {
                     Icon(imageVector = Icons.Default.Cameraswitch, contentDescription = "Switch Camera")
@@ -179,13 +178,12 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun toggleCamera(controller:LifecycleCameraController):CameraSelector{
-        return if(controller.cameraSelector == CameraSelector.DEFAULT_FRONT_CAMERA){
-            CameraSelector.DEFAULT_BACK_CAMERA
+    private fun toggleCamera(controller:LifecycleCameraController){
+        if(controller.cameraSelector == CameraSelector.DEFAULT_FRONT_CAMERA){
+            controller.cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
         }else{
-            CameraSelector.DEFAULT_FRONT_CAMERA
+            controller.cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA
         }
-
     }
 
     companion object {
