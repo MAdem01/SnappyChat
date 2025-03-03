@@ -76,6 +76,15 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    private fun toggleCamera(controller:LifecycleCameraController):CameraSelector{
+        return if(controller.cameraSelector == CameraSelector.DEFAULT_FRONT_CAMERA){
+            CameraSelector.DEFAULT_BACK_CAMERA
+        }else{
+            CameraSelector.DEFAULT_FRONT_CAMERA
+        }
+
+    }
+
     companion object {
         private val CAMERAX_PERMISSIONS = arrayOf(
             Manifest.permission.CAMERA,
