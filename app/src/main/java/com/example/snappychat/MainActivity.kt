@@ -80,6 +80,24 @@ class MainActivity : ComponentActivity() {
                                 contentDescription = "Switch Camera"
                             )
                         }
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .align(Alignment.BottomCenter)
+                                .padding(16.dp),
+                            horizontalArrangement = Arrangement.SpaceAround
+                        ){
+                            IconButton(
+                                onClick = {
+
+                                }
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.PhotoCamera,
+                                    contentDescription = "Take Photo"
+                                )
+                            }
+                        }
                     }
                 }
             }
