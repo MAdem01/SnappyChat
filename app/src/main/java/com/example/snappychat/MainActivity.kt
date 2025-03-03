@@ -3,6 +3,7 @@ package com.example.snappychat
 import android.Manifest
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.Matrix
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -152,7 +153,24 @@ class MainActivity : ComponentActivity() {
             object : ImageCapture.OnImageCapturedCallback(){
                 override fun onCaptureSuccess(image: ImageProxy) {
                     super.onCaptureSuccess(image)
-                    onPhotoTaken(image.toBitmap())
+                    val bitmap = image.toBitmap()
+
+                    if (controller.cameraSelector == CameraSelector.DEFAULT_FRONT_CAMERA) {
+                        val flippedBitmap = Bitmap.createBitmap(
+                            bitmap,
+                            0,
+                            0,
+                            bitmap.width,
+                            bitmap.height,
+                            Matrix().apply {
+                                postScale(-1f, 1f, bitmap.width / 2f, bitmap.height / 2f)
+                            },
+                            true
+                        )
+                        onPhotoTaken(flippedBitmap)
+                    } else {
+                        onPhotoTaken(bitmap)
+                    }
                     image.close()
                 }
 
