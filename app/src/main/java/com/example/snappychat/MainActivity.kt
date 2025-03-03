@@ -46,7 +46,6 @@ import androidx.core.content.ContextCompat
 import com.example.snappychat.ui.theme.SnappyChatTheme
 
 class MainActivity : ComponentActivity() {
-    private var currentPhoto: Bitmap? by mutableStateOf(null)
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,6 +60,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             SnappyChatTheme {
+                var currentPhoto by remember { mutableStateOf<Bitmap?>(null) }
                 val scaffoldState = rememberBottomSheetScaffoldState()
                 val controller = remember {
                     LifecycleCameraController(applicationContext).apply {
@@ -109,7 +109,12 @@ class MainActivity : ComponentActivity() {
                             ) {
                                 IconButton(
                                     onClick = {
-                                        takePhoto(controller)
+                                        takePhoto(
+                                            controller = controller,
+                                            onPhotoTaken = {
+                                                photo -> currentPhoto = photo
+                                            }
+                                        )
                                     }
                                 ) {
                                     Icon(
@@ -156,13 +161,14 @@ class MainActivity : ComponentActivity() {
 
     private fun takePhoto(
         controller: LifecycleCameraController,
+        onPhotoTaken: (Bitmap) -> Unit
     ){
         controller.takePicture(
             ContextCompat.getMainExecutor(applicationContext),
             object : ImageCapture.OnImageCapturedCallback(){
                 override fun onCaptureSuccess(image: ImageProxy) {
                     super.onCaptureSuccess(image)
-                    currentPhoto = image.toBitmap()
+                    onPhotoTaken(image.toBitmap())
                     image.close()
                 }
 
