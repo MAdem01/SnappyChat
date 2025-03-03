@@ -61,6 +61,18 @@ class MainActivity : ComponentActivity() {
                             controller = controller,
                             modifier = Modifier.fillMaxSize()
                         )
+                        IconButton(
+                            onClick = {
+                                controller.cameraSelector = toggleCamera(controller)
+                            },
+                            modifier = Modifier.offset(0.dp)
+
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Cameraswitch,
+                                contentDescription = "Switch Camera"
+                            )
+                        }
                     }
                 }
             }
@@ -74,6 +86,15 @@ class MainActivity : ComponentActivity() {
                 it
             ) == PackageManager.PERMISSION_GRANTED
         }
+    }
+
+    private fun toggleCamera(controller:LifecycleCameraController):CameraSelector{
+        return if(controller.cameraSelector == CameraSelector.DEFAULT_FRONT_CAMERA){
+            CameraSelector.DEFAULT_BACK_CAMERA
+        }else{
+            CameraSelector.DEFAULT_FRONT_CAMERA
+        }
+
     }
 
     companion object {
