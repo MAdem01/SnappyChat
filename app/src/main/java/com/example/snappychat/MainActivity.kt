@@ -19,10 +19,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Cameraswitch
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.PhotoCamera
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -129,6 +132,22 @@ class MainActivity : ComponentActivity() {
                                 .fillMaxSize(),
                             contentScale = ContentScale.Crop
                         )
+                        IconButton(
+                            onClick = {
+                                currentPhoto = null
+                            },
+                            modifier = Modifier
+                                .width(40.dp)
+                                .height(40.dp)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Close,
+                                contentDescription = "Close Photo",
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .align(Alignment.TopStart)
+                            )
+                        }
                     }
                 }
             }
