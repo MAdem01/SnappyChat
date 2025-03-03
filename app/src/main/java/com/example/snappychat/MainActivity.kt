@@ -19,9 +19,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Cameraswitch
 import androidx.compose.material.icons.filled.Close
@@ -74,34 +72,10 @@ class MainActivity : ComponentActivity() {
                        onPhotoTaken = {photo -> currentPhoto = photo}
                    )
                 }else{
-                    Box(
-                        modifier = Modifier
-                        .fillMaxSize()
-                    ) {
-                        Image(
-                            bitmap = currentPhoto!!.asImageBitmap(),
-                            contentDescription = "Photo",
-                            modifier = Modifier
-                                .fillMaxSize(),
-                            contentScale = ContentScale.Crop
-                        )
-                        IconButton(
-                            onClick = {
-                                currentPhoto = null
-                            },
-                            modifier = Modifier
-                                .width(40.dp)
-                                .height(40.dp)
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Close,
-                                contentDescription = "Close Photo",
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .align(Alignment.TopStart)
-                            )
-                        }
-                    }
+                    PhotoPreviewScreen(
+                        photo = currentPhoto!!,
+                        onClose = {currentPhoto = null}
+                    )
                 }
             }
         }
@@ -147,6 +121,27 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+    @Composable
+    fun PhotoPreviewScreen(photo: Bitmap, onClose: () -> Unit) {
+        Box(modifier = Modifier.fillMaxSize()) {
+            Image(
+                bitmap = photo.asImageBitmap(),
+                contentDescription = "Photo",
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
+            IconButton(
+                onClick = { onClose() },
+                modifier = Modifier.align(Alignment.TopStart)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Close,
+                    contentDescription = "Close Photo")
+            }
+        }
+    }
+
 
     private fun takePhoto(
         controller: LifecycleCameraController,
