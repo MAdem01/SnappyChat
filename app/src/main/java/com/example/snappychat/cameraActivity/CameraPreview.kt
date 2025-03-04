@@ -1,4 +1,4 @@
-package com.example.snappychat
+package com.example.snappychat.cameraActivity
 
 import androidx.camera.view.LifecycleCameraController
 import androidx.camera.view.PreviewView
