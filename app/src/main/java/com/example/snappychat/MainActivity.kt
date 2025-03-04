@@ -15,16 +15,23 @@ import androidx.camera.core.ImageProxy
 import androidx.camera.view.CameraController
 import androidx.camera.view.LifecycleCameraController
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Cameraswitch
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.PhotoCamera
+import androidx.compose.material.icons.outlined.Circle
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -37,6 +44,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
@@ -101,22 +109,54 @@ class MainActivity : ComponentActivity() {
 
                 IconButton(
                     onClick = { toggleCamera(controller) },
-                    modifier = Modifier.align(Alignment.TopStart)
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .offset((-12).dp, 12.dp)
+                        .height(35.dp)
+                        .width(35.dp)
                 ) {
-                    Icon(imageVector = Icons.Default.Cameraswitch, contentDescription = "Switch Camera")
+                    Icon(imageVector = Icons.Default.Cameraswitch,
+                        contentDescription = "Switch Camera",
+                        tint = Color.White,
+                        modifier = Modifier
+                            .fillMaxSize()
+                    )
                 }
 
-                Row(
+                Column(
                     modifier = Modifier
-                        .fillMaxWidth()
                         .align(Alignment.BottomCenter)
-                        .padding(16.dp),
-                    horizontalArrangement = Arrangement.SpaceAround
+                        .fillMaxWidth()
                 ) {
-                    IconButton(
-                        onClick = { takePhoto(controller, onPhotoTaken) }
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp)
+                            .height(100.dp),
+                        horizontalArrangement = Arrangement.SpaceAround
                     ) {
-                        Icon(imageVector = Icons.Default.PhotoCamera, contentDescription = "Take Photo")
+                        IconButton(
+                            onClick = { takePhoto(controller, onPhotoTaken) },
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .aspectRatio(1f)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Outlined.Circle,
+                                contentDescription = "Take Photo",
+                                tint = Color.White,
+                                modifier = Modifier
+                                    .fillMaxSize()
+                            )
+                        }
+                    }
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp)
+                            .background(color = Color.Black),
+                        horizontalArrangement = Arrangement.SpaceAround
+                    ) {
                     }
                 }
             }
@@ -134,11 +174,19 @@ class MainActivity : ComponentActivity() {
             )
             IconButton(
                 onClick = { onClose() },
-                modifier = Modifier.align(Alignment.TopStart)
+                modifier = Modifier
+                    .align(Alignment.TopStart)
+                    .offset(12.dp, 12.dp)
+                    .width(35.dp)
+                    .height(35.dp)
             ) {
                 Icon(
                     imageVector = Icons.Default.Close,
-                    contentDescription = "Close Photo")
+                    contentDescription = "Close Photo",
+                    tint = Color.White,
+                    modifier = Modifier
+                        .fillMaxSize()
+                )
             }
         }
     }
