@@ -25,7 +25,9 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Cameraswitch
 import androidx.compose.material.icons.filled.Close
@@ -163,11 +165,19 @@ class MainActivity : ComponentActivity() {
             )
             IconButton(
                 onClick = { onClose() },
-                modifier = Modifier.align(Alignment.TopStart)
+                modifier = Modifier
+                    .align(Alignment.TopStart)
+                    .offset(12.dp, 12.dp)
+                    .width(35.dp)
+                    .height(35.dp)
             ) {
                 Icon(
                     imageVector = Icons.Default.Close,
-                    contentDescription = "Close Photo")
+                    contentDescription = "Close Photo",
+                    tint = Color.White,
+                    modifier = Modifier
+                        .fillMaxSize()
+                )
             }
         }
     }
