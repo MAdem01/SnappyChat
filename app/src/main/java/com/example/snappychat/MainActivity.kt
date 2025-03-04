@@ -109,9 +109,18 @@ class MainActivity : ComponentActivity() {
 
                 IconButton(
                     onClick = { toggleCamera(controller) },
-                    modifier = Modifier.align(Alignment.TopStart)
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .offset((-12).dp, 12.dp)
+                        .height(35.dp)
+                        .width(35.dp)
                 ) {
-                    Icon(imageVector = Icons.Default.Cameraswitch, contentDescription = "Switch Camera")
+                    Icon(imageVector = Icons.Default.Cameraswitch,
+                        contentDescription = "Switch Camera",
+                        tint = Color.White,
+                        modifier = Modifier
+                            .fillMaxSize()
+                    )
                 }
 
                 Column(
