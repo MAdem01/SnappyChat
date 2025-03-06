@@ -21,13 +21,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if(!hasRequiredPermissions()) {
-            ActivityCompat.requestPermissions(
-                this,
-                CAMERAX_PERMISSIONS,
-                0
-            )
-        }
+        hasRequiredPermissions()
 
         setContent {
             SnappyChatTheme {
@@ -56,12 +50,19 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun hasRequiredPermissions(): Boolean {
-        return CAMERAX_PERMISSIONS.all {
+
+    private fun hasRequiredPermissions(){
+        if(CAMERAX_PERMISSIONS.all {
             ContextCompat.checkSelfPermission(
                 applicationContext,
                 it
-            ) == PackageManager.PERMISSION_GRANTED
+            ) == PackageManager.PERMISSION_DENIED
+        }){
+            ActivityCompat.requestPermissions(
+                this,
+                CAMERAX_PERMISSIONS,
+                0
+            )
         }
     }
 
