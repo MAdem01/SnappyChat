@@ -30,12 +30,12 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 
 @Composable
-fun LoginScreen(){
+fun LoginScreen(navController : NavController){
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     val red = Color(0xFFFF3131)
@@ -87,7 +87,13 @@ fun LoginScreen(){
                 )
                 )
             Button(
-                onClick = {},
+                onClick = {
+                    navController.navigate("main"){
+                        popUpTo("auth"){
+                            inclusive = true
+                        }
+                    }
+                },
                 colors = ButtonColors(
                     containerColor = Color.Black,
                     contentColor = Color.White,
@@ -137,10 +143,4 @@ fun LoginScreen(){
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun LoginScreenPreview(){
-    LoginScreen()
 }

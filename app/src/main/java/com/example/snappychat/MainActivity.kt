@@ -8,6 +8,11 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.navigation
+
+import androidx.navigation.compose.rememberNavController
 import com.example.snappychat.cameraActivity.CameraScreen
 import com.example.snappychat.cameraActivity.CameraViewModel
 import com.example.snappychat.photoReview.PhotoReviewScreen
@@ -26,22 +31,40 @@ class MainActivity : ComponentActivity() {
         setContent {
             SnappyChatTheme {
                 val controller = cameraViewModel.cameraController
-                if(photoViewModel.currentPhoto == null){
-                    CameraScreen(
-                        controller = controller,
-                        onPhotoTaken =
-                            { photo ->
-                            photoViewModel.setPhoto(photo)
-                            },
-                        this
-                    )
-                }else{
-                    PhotoReviewScreen(
-                        photoViewModel.currentPhoto!!,
-                        onClose = {
-                            photoViewModel.clearPhoto()
+                val navController = rememberNavController()
+                NavHost(navController = navController, startDestination = "auth"){
+
+                    navigation(startDestination = "loginScreen", route = "auth"){
+                        composable("loginScreen"){
+                            LoginScreen(navController)
                         }
-                    )
+                    }
+                    navigation(startDestination = "cameraPreview", route = "main"){
+                        composable("cameraPreview"){
+                            CameraScreen(
+                                controller,
+                                onPhotoTaken =
+                                { photo ->
+                                    photoViewModel.setPhoto(photo)
+                                    navController.navigate("photoReview")
+                                },
+                                this@MainActivity
+                            )
+                        }
+                        composable("photoReview"){
+                            PhotoReviewScreen(
+                                photoViewModel.currentPhoto!!,
+                                onClose = {
+                                    navController.navigate("cameraPreview"){
+                                        popUpTo("photoReview"){
+                                            inclusive = true
+                                        }
+                                    }
+
+                                }
+                            )
+                        }
+                    }
                 }
             }
         }
