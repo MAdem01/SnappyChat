@@ -9,8 +9,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
 @Setter
 public class UserEntity {
     @Id
@@ -31,6 +29,15 @@ public class UserEntity {
             inverseJoinColumns = @JoinColumn(name = "friend_id")
     )
     private Set<UserEntity> friends = new HashSet<>();
+
+    public UserEntity() {
+    }
+
+    public UserEntity(String username, String password, String email) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+    }
 
     public Long getId() {
         return id;
