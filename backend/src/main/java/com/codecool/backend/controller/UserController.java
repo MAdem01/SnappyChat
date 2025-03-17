@@ -1,5 +1,7 @@
 package com.codecool.backend.controller;
 
+import com.codecool.backend.dto.NewUserDTO;
+import com.codecool.backend.dto.UserDTO;
 import com.codecool.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
