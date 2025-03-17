@@ -1,5 +1,7 @@
 package com.codecool.backend.service;
 
+import com.codecool.backend.dto.NewUserDTO;
+import com.codecool.backend.dto.UserDTO;
 import com.codecool.backend.repository.model.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
