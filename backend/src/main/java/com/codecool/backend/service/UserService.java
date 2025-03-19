@@ -5,6 +5,7 @@ import com.codecool.backend.dto.UserDTO;
 import com.codecool.backend.repository.UserRepository;
 import com.codecool.backend.repository.model.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,10 +13,12 @@ import java.util.List;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<UserDTO> getAllUsers(){
@@ -34,7 +37,7 @@ public class UserService {
     public long createUser(NewUserDTO newUserDTO) {
         UserEntity userEntity = new UserEntity(
                 newUserDTO.username(),
-                newUserDTO.password(),
+                passwordEncoder.encode(newUserDTO.password()),
                 newUserDTO.email()
         );
 
