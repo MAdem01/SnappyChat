@@ -1,15 +1,10 @@
 package com.codecool.backend.repository.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Setter
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,13 +17,14 @@ public class UserEntity {
     @Column(nullable = false, unique = true)
     private String email;
 
+
     @ManyToMany
     @JoinTable(
             name = "user_friends",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "friend_id")
     )
-    private Set<UserEntity> friends = new HashSet<>();
+    private final Set<UserEntity> friends = new HashSet<>();
 
     public UserEntity() {
     }
