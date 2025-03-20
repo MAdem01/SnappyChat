@@ -119,7 +119,7 @@ fun LoginScreen(navController : NavController){
                         .width(4.dp)
                 )
                 Button(
-                    onClick = {},
+                    onClick = {navController.navigate("registerScreen")},
                     colors = ButtonColors(
                         containerColor = Color.Transparent,
                         contentColor = Color.Blue,
