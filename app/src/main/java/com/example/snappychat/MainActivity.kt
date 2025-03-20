@@ -38,6 +38,9 @@ class MainActivity : ComponentActivity() {
                         composable("loginScreen"){
                             LoginScreen(navController)
                         }
+                        composable("registerScreen"){
+                            RegisterScreen(navController)
+                        }
                     }
                     navigation(startDestination = "cameraPreview", route = "main"){
                         composable("cameraPreview"){
