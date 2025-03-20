@@ -21,28 +21,28 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun PhotoReviewScreen(photo: Bitmap, onClose: () -> Unit) {
-    Box(modifier = Modifier.fillMaxSize()) {
-        Image(
-            bitmap = photo.asImageBitmap(),
-            contentDescription = "Photo",
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
-        )
-        IconButton(
-            onClick = { onClose() },
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .offset(12.dp, 12.dp)
-                .width(35.dp)
-                .height(35.dp)
-        ) {
-            Icon(
-                imageVector = Icons.Default.Close,
-                contentDescription = "Close Photo",
-                tint = Color.White,
-                modifier = Modifier
-                    .fillMaxSize()
+        Box(modifier = Modifier.fillMaxSize()) {
+            Image(
+                bitmap = photo.asImageBitmap(),
+                contentDescription = "Photo",
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
             )
+            IconButton(
+                onClick = { onClose() },
+                modifier = Modifier
+                    .align(Alignment.TopStart)
+                    .offset(12.dp, 12.dp)
+                    .width(35.dp)
+                    .height(35.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Close,
+                    contentDescription = "Close Photo",
+                    tint = Color.White,
+                    modifier = Modifier
+                        .fillMaxSize()
+                )
+            }
         }
-    }
 }

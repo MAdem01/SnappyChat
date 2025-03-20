@@ -35,9 +35,10 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
 @Composable
-fun LoginScreen(navController : NavController){
+fun RegisterScreen(navController : NavController){
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
     val red = Color(0xFFFF3131)
 
     Box(
@@ -72,7 +73,7 @@ fun LoginScreen(navController : NavController){
                     unfocusedIndicatorColor = Color.Transparent,
                     disabledIndicatorColor = Color.Transparent
                 )
-                )
+            )
 
             TextField(
                 value = password,
@@ -85,7 +86,19 @@ fun LoginScreen(navController : NavController){
                     unfocusedIndicatorColor = Color.Transparent,
                     disabledIndicatorColor = Color.Transparent
                 )
+            )
+            TextField(
+                value = email,
+                onValueChange = { email = it },
+                label = { Text("Email") },
+                visualTransformation = PasswordVisualTransformation(),
+                shape = RoundedCornerShape(8.dp),
+                colors = TextFieldDefaults.colors(
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    disabledIndicatorColor = Color.Transparent
                 )
+            )
             Button(
                 onClick = {
                     navController.navigate("main"){
@@ -102,7 +115,7 @@ fun LoginScreen(navController : NavController){
 
             ) {
                 Text(
-                    text = "Login",
+                    text = "Register",
                     modifier = Modifier
                         .background(color = Color.Black))
             }
@@ -113,13 +126,13 @@ fun LoginScreen(navController : NavController){
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
-                Text("Don't have an account?")
+                Text("Already registered?")
                 Spacer(
                     modifier = Modifier
                         .width(4.dp)
                 )
                 Button(
-                    onClick = {navController.navigate("registerScreen")},
+                    onClick = {navController.navigate("loginScreen")},
                     colors = ButtonColors(
                         containerColor = Color.Transparent,
                         contentColor = Color.Blue,
